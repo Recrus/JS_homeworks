@@ -5,21 +5,44 @@ const goods = [
   { title: 'Shoes', price: 250 },
 ];
 
-const renderGoodsItem = ({title = '', price = 0}) => {
-  return `
-    <div class="goods-item">
-			<img src="/img/corob.png" alt="">
-      <h3>${title}</h3>
-      <p>${price}</p>
-    </div>
-  `;
-};
-
-//Запятые между блоками можно убрать с помощью метода .join, они появляются, т.к.
-//стандартный знак, разделяющий значения массива это ",".
-const renderGoodsList = (list = []) => {
-  let goodsList = list.map(item => renderGoodsItem(item)).join('');
-  document.querySelector('.goods-list').innerHTML = goodsList;
+class GoodsItem {
+  constructor({title = '', price = 0}) {
+    this.title = title;
+    this.price = price;
+  }
+	render() {
+		return `
+			<div class="goods-item">
+				<img src="/img/corob.png" alt="">
+				<h3>${this.title}</h3>
+				<p>${this.price}</p>
+			</div>
+		`;
+	}
 }
 
-renderGoodsList(goods);
+class GoodsList {
+	fetchData() {
+		this.items = goods;
+		debugger
+	}
+	getSum() {
+		return this.items.reduce((prev, { price }) => {
+      return prev + price;
+    }, 0)
+  }
+	render() {
+		const goods = this.items.map(item => {
+			const goodItem = new GoodsItem(item);
+			return goodItem.render()
+		}).join('');
+		document.querySelector('.goods-list').innerHTML = goods;
+	}
+}
+
+const goodsList = new GoodsList();
+goodsList.fetchData();
+goodsList.render();
+//Оставил проверку функии, которая дает сумму цен всех товаров, в следующем
+//занятии уберу.
+console.log(goodsList.getSum());

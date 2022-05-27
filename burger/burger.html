@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<link rel="stylesheet" href="burger-style.css">
+</head>
+
+<body>
+    <h1>Бургер</h1>
+    <div class="container">
+        <div class="block">
+            <h2>Размер бургера</h2>
+            <div><input type="radio" name="burger" date-cost="50" date-kkal="20" class="menu">Маленький</div>
+            <div><input type="radio" name="burger" date-cost="100" date-kkal="40" class="menu">Большой</div>
+        </div>
+        <div class="block">
+            <h2>Наполнение</h2>
+            <div><input type="radio" checked name="topping" date-cost="10" date-kkal="20" class="menu">Сыр</div>
+            <div><input type="radio" name="topping" date-cost="20" date-kkal="5" class="menu">Салат</div>
+            <div><input type="radio" name="topping" date-cost="15" date-kkal="10" class="menu">Картофель</div>
+        </div>
+				<div class="block">
+					<h2>Дополнительно</h2>
+					<div><input type="radio" name="addedOne" date-cost="10" date-kkal="20" class="menu">Приправа</div>
+					<div><input type="radio" name="addedTwo" date-cost="20" date-kkal="5" class="menu">Майонез</div>
+			</div>
+        <div class="block-all">
+            <h3>Итоги:</h3>
+            <p>Калорийность:<span id="kkal"></span></p>
+            <p>Цена:<span id="price"></span></p>
+            <button id="result">Готово</button>
+        </div>
+    </div>
+		<script src="cost-ofBurger.js"></script>
+		</body>
+
+		</html> 
