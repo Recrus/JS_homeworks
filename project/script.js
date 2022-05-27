@@ -5,17 +5,20 @@ const goods = [
   { title: 'Shoes', price: 250 },
 ];
 
-const renderGoodsItem = (title, price) => {
+const renderGoodsItem = ({title = '', price = 0}) => {
   return `
     <div class="goods-item">
+			<img src="/img/corob.png" alt="">
       <h3>${title}</h3>
       <p>${price}</p>
     </div>
   `;
 };
 
-const renderGoodsList = (list) => {
-  let goodsList = list.map(item => renderGoodsItem(item.title, item.price));
+//Запятые между блоками можно убрать с помощью метода .join, они появляются, т.к.
+//стандартный знак, разделяющий значения массива это ",".
+const renderGoodsList = (list = []) => {
+  let goodsList = list.map(item => renderGoodsItem(item)).join('');
   document.querySelector('.goods-list').innerHTML = goodsList;
 }
 
