@@ -24,7 +24,6 @@ class GoodsItem {
 class GoodsList {
 	fetchData() {
 		this.items = goods;
-		debugger
 	}
 	getSum() {
 		return this.items.reduce((prev, { price }) => {
