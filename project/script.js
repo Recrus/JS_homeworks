@@ -5,26 +5,44 @@ const goods = [
   { title: 'Shoes', price: 250 },
 ];
 
+const BASE_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+const GOODS_URL = `${BASE_URL}/catalogData.json`
+const BASKET_URL = `${BASE_URL}/getBasket.json`
+
+function service(url, callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.send();
+  xhr.onload = () => {
+    callback(JSON.parse(xhr.response))
+  }
+}
+
 class GoodsItem {
-  constructor({title = '', price = 0}) {
-    this.title = title;
+  constructor({product_name = '', price = 0}) {
+    this.title = product_name;
     this.price = price;
   }
 	render() {
 		return `
 			<div class="goods-item">
 				<img src="/img/corob.png" alt="">
+				<hr>
 				<h3>${this.title}</h3>
-				<p>${this.price}</p>
+				<p>${this.price}$</p>
 			</div>
 		`;
 	}
 }
 
 class GoodsList {
-	fetchData() {
-		this.items = goods;
-	}
+	items = [];
+	fetchData (callback) {
+    service(GOODS_URL, (data) => {
+      this.items = data;
+      callback()
+    });
+  }
 	getSum() {
 		return this.items.reduce((prev, { price }) => {
       return prev + price;
@@ -39,9 +57,19 @@ class GoodsList {
 	}
 }
 
+class BasketGoods {
+	items = [];
+	fetchData () {
+		service(BASKET_URL, (data) => {
+      this.items = data;
+    });
+	}
+}
+
 const goodsList = new GoodsList();
-goodsList.fetchData();
-goodsList.render();
-//Оставил проверку функии, которая дает сумму цен всех товаров, в следующем
-//занятии уберу.
-console.log(goodsList.getSum());
+goodsList.fetchData(() => {
+  goodsList.render();
+});
+
+const basketGoods = new BasketGoods();
+basketGoods.fetchData();
