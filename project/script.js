@@ -9,13 +9,9 @@ const BASE_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-st
 const GOODS_URL = `${BASE_URL}/catalogData.json`
 const BASKET_URL = `${BASE_URL}/getBasket.json`
 
-function service(url, callback) {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', url);
-  xhr.send();
-  xhr.onload = () => {
-    callback(JSON.parse(xhr.response))
-  }
+function service(url) {
+	return fetch(url)
+	.then((res) => res.json())
 }
 
 class GoodsItem {
@@ -26,7 +22,7 @@ class GoodsItem {
 	render() {
 		return `
 			<div class="goods-item">
-				<img src="/img/corob.png" alt="">
+				<img src="/project/img/corob.png" alt="">
 				<hr>
 				<h3>${this.title}</h3>
 				<p>${this.price}$</p>
@@ -37,19 +33,25 @@ class GoodsItem {
 
 class GoodsList {
 	items = [];
-	fetchData (callback) {
-    service(GOODS_URL, (data) => {
-      this.items = data;
-      callback()
+	filteredItems = [];
+	fetchData () {
+		return service(GOODS_URL).then((data) => {
+        this.items = data;
+        this.filteredItems = data;
     });
-  }
+	}
+	filter(input) {
+		this.filteredItems = this.items.filter(({ product_name }) => {
+      return (new RegExp(input, 'gui')).test(product_name);
+		})
+	}
 	getSum() {
 		return this.items.reduce((prev, { price }) => {
       return prev + price;
     }, 0)
   }
 	render() {
-		const goods = this.items.map(item => {
+		const goods = this.filteredItems.map(item => {
 			const goodItem = new GoodsItem(item);
 			return goodItem.render()
 		}).join('');
@@ -60,16 +62,25 @@ class GoodsList {
 class BasketGoods {
 	items = [];
 	fetchData () {
-		service(BASKET_URL, (data) => {
-      this.items = data;
+		return new Promise((resolve) => {
+			service(BASKET_URL).then((data) => {
+        this.items = data;
+        this.filteredItems = data;
+				resolve();
     });
+		})
 	}
 }
 
 const goodsList = new GoodsList();
-goodsList.fetchData(() => {
-  goodsList.render();
-});
-
+goodsList.fetchData().then(() => {
+	goodsList.render();
+})
 const basketGoods = new BasketGoods();
 basketGoods.fetchData();
+
+document.getElementsByClassName('search-button')[0].addEventListener('click', () => {
+	const input = document.getElementsByClassName('goods-search')[0].value;
+	goodsList.filter(input);
+  goodsList.render();
+})
