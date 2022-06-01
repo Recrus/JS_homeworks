@@ -40,6 +40,55 @@ header {
   transition: ease-in-out 250ms;
 }
 
+.right-header-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 400px;
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.goods-search {
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 0 0 2px black;
+  height: 24px;
+  font-family: Roboto, sans-serif;
+  padding-left: 15px;
+}
+
+.search-button {
+  border: none;
+  box-shadow: 0 0 0 2px black;
+  text-decoration: none;
+  color: black;
+  margin-left: 20px;
+  border-radius: 10px;
+  background-color: whitesmoke;
+  box-shadow: 0 0 0 2px black;
+  padding: 10px 0;
+  width: 100px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 200;
+  transition: ease-in-out 250ms;
+  margin-right: 15px;
+  margin-top: 10px;
+}
+
+.search-button:hover {
+  background: rgba(245, 245, 245, 0.7);
+  transition: ease-in-out 250ms;
+}
+
 .button-wrap {
   margin-right: 40px;
 }
