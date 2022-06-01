@@ -62,13 +62,10 @@ class GoodsList {
 class BasketGoods {
 	items = [];
 	fetchData () {
-		return new Promise((resolve) => {
-			service(BASKET_URL).then((data) => {
+		return service(BASKET_URL).then((data) => {
         this.items = data;
         this.filteredItems = data;
-				resolve();
     });
-		})
 	}
 }
 
