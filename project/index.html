@@ -1,36 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>eShop</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="script.js"></script>
+  </head>
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>eShop</title>
-	<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-	<header>
-		<div class="logo">
-			<a href="#">eShop</a>
-		</div>
-		<div class="right-header-wrap">
-			<div class="search">
-				<input type="text" class="goods-search" />
-				<button class="search-button" type="button">Искать</button>
-			</div>
-			<div class="button-wrap">
-				<button class="closing-button"><span>Cart</span></button>
-			</div>
-		</div>
-	</header>
-	<main>
-		<div class="goods-list"></div>
-	</main>
-	<footer>
-		<div class="aggit-wrap"><a class="aggit">BUY ME!</a></div>
-	</footer>
-	<script src="script.js"></script>
-</body>
-
+  <body>
+    <div id="root">
+      <header>
+        <div class="container">
+          <div class="logo">
+            <a href="#">eShop</a>
+          </div>
+          <div class="right-header-wrap">
+            <div class="search">
+              <input type="text" class="goods-search" v-model="searchValue" />
+            </div>
+            <div class="button-wrap" @click="visibleCart">
+              <button class="closing-button"><span>Cart</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="cart-warp" v-if="isVisibleCart">
+          <div class="cart">
+            <div class="cart-name">
+              <span>Cart</span>
+              <img src="/project/img/cross.svg" alt="" @click="visibleCart" />
+            </div>
+            <hr />
+            <div class="cart-item-wrap" v-for="#">
+              <div class="cart-item">
+                <div class="cart-item-name">Mouse</div>
+                <div class="cart-item-count">1 шт.</div>
+                <div class="cart-item-price">1$</div>
+              </div>
+              <hr />
+            </div>
+            <div class="cart-total-wrap">
+              <div class="cart-total">Total price: <span>1$</span></div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main>
+        <div class="goods-list" v-if="items.length !== 0">
+          <div
+            class="goods-item"
+            v-for="{product_name, price} in filteredItems"
+          >
+            <img src="/project/img/corob.png" alt="#" />
+            <hr />
+            <h3>{{product_name}}</h3>
+            <p>{{price}}</p>
+          </div>
+        </div>
+        <div class="items-plug" v-else>No data, sorry :(</div>
+      </main>
+      <footer>
+        <div class="aggit-wrap">
+          <a class="aggit" v-if="items.length !== 0"
+            >BUY US FOR JUST {{getSum}}!</a
+          >
+        </div>
+      </footer>
+    </div>
+  </body>
 </html>
