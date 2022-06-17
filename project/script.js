@@ -1,7 +1,6 @@
-const BASE_URL =
-  "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses";
-const GOODS_URL = `${BASE_URL}/catalogData.json`;
-const BASKET_URL = `${BASE_URL}/getBasket.json`;
+const BASE_URL = "http://localhost:8000";
+const GOODS_URL = `${BASE_URL}/goods.json`;
+const BASKET_URL = `${BASE_URL}/basket`;
 
 function service(url) {
   return fetch(url).then((res) => res.json());
@@ -9,6 +8,11 @@ function service(url) {
 
 window.onload = () => {
   Vue.component("basket", {
+    data() {
+      return {
+        basketGoodsItems: [],
+      };
+    },
     template: `<div class="cart-warp">
 		<div class="cart">
 			<div class="cart-name">
@@ -17,18 +21,32 @@ window.onload = () => {
 			</div>
 			<hr />
 			<div class="cart-item-wrap">
-				<div class="cart-item">
-					<div class="cart-item-name">Mouse</div>
-					<div class="cart-item-count">1 шт.</div>
-					<div class="cart-item-price">1$</div>
-				</div>
+			<cart-item v-for="item in basketGoodsItems" :item="item"></cart-item>
 				<hr />
-			</div>
-			<div class="cart-total-wrap">
-				<div class="cart-total">Total price: <span>1$</span></div>
 			</div>
 		</div>
 	</div>`,
+    mounted() {
+      service(BASKET_URL).then((basketGoods) => {
+        this.basketGoodsItems = basketGoods;
+      });
+    },
+  });
+  Vue.component("cart-item", {
+    props: ["item"],
+    template: `
+				<div class="cart-item">
+					<div class="cart-item_field">
+						<span class="cart-item__title">{{ item.product_name }}</span>
+						<span class="cart-item__price">{{ item.price }}р.</span>
+					</div>
+					<div class="cart-item__count">
+					<span>{{ item.count }}шт.</span>
+						<button>+</button>
+						<button>-</button>
+					</div>
+				</div>
+			`,
   });
   Vue.component("custom-button", {
     template: `<button class="closing-button"><span>Cart</span></button>`,
