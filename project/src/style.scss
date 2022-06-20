@@ -120,6 +120,13 @@ body {
   }
   box-shadow: 0px 0px 14px 1px black;
 }
+.cross {
+  height: 18px;
+  width: 18px;
+  background-image: url(./img/cross.svg);
+}
+.corob {
+}
 .cart-name {
   display: flex;
   justify-content: space-between;
@@ -200,10 +207,13 @@ main {
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0 2px #ffc736;
   transition: ease-in-out 250ms;
+  display: flex;
+  flex-direction: column;
   hr {
     border: none;
     background-color: #ffc736;
     height: 2px;
+    min-width: 100%;
   }
   img {
     max-width: 200px;
@@ -212,7 +222,25 @@ main {
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 2px;
+    margin: 0;
+    margin-top: 10px;
   }
+  button {
+    background-color: #ffc736;
+    border: none;
+    font-family: Roboto, sans-serif;
+    cursor: pointer;
+    transition: ease-in-out 250ms;
+    padding: 10px;
+  }
+  button:hover {
+    opacity: 0.7;
+    transition: ease-in-out 250ms;
+  }
+}
+.custom-button-wrap {
+  display: flex;
+  justify-content: center;
 }
 .goods-item:hover {
   transform: translate(4px, 4px);
