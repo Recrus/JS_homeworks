@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>eShop</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+  <script defer src="index.js"></script></head>
+
+  <body>
+    <div id="root">
+      <header>
+        <div class="container">
+          <div class="logo">
+            <a href="#">eShop</a>
+          </div>
+          <div class="right-header-wrap">
+            <search v-model="search"></search>
+            <custom-button-cart @click="visibleCart"></custom-button-cart>
+          </div>
+        </div>
+        <basket v-if="isVisibleCart" @close="visibleCart"></basket>
+      </header>
+      <main>
+        <div class="goods-list" v-if="items.length">
+          <good v-for="item in filteredItems" :item="item"></good>
+        </div>
+        <div class="items-plug" v-else>No data, sorry :(</div>
+      </main>
+      <footer>
+        <div class="aggit-wrap">
+          <a class="aggit" v-if="items.length !== 0"
+            >BUY US FOR JUST {{getSum}}!</a
+          >
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
